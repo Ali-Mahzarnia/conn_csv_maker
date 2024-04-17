@@ -121,12 +121,12 @@ for (i in 1:length(file_list)) {
 # 
 
 results = as.data.frame(results)
-cardiac = as.data.frame( matrix(NA,0,14) )
-colnames(cardiac) = c("ID", "E2", "E3" , "E4", "HN", "non-HN", "KO", "male" , "female", "HFD", "CTRL", "Age", "EF" ,"All_subjects")
+cardiac = as.data.frame( matrix(NA,0,14 + 13 ) )
+colnames(cardiac) = c("ID", "E2", "E3" , "E4", "HN", "non-HN", "KO", "male" , "female", "HFD", "CTRL", "Age", c(colnames)[10:23] ,"All_subjects")
 
 for (i in 1:dim(results)[1]) {
-  res = as.data.frame( matrix(0,1,14) )
-  colnames(res) = c("ID", "E2", "E3" , "E4", "HN", "non-HN", "KO", "male" , "female", "HFD", "CTRL", "Age", "EF" ,"All_subjects")
+  res = as.data.frame( matrix(0,1,14 +13) )
+  colnames(res) = c("ID", "E2", "E3" , "E4", "HN", "non-HN", "KO", "male" , "female", "HFD", "CTRL", "Age", c(colnames)[10:23] ,"All_subjects")
   
   res$ID = results$ID[i]
   genotype=results$Genotype [i]
@@ -147,7 +147,7 @@ for (i in 1:dim(results)[1]) {
   
   res$Age = results$Age[i]
   
-  res$EF = results$Ejection_Fraction[i]
+  res[13:27] = results[i,10:23]
   
   res$ All_subjects = 1
   
@@ -156,4 +156,4 @@ for (i in 1:dim(results)[1]) {
 }
 
 
-write.csv(cardiac, paste0("coon_for_cardiac_",dim(cardiac)[1] ,".csv"), row.names=FALSE)
+write.csv(cardiac, paste0("con_for_cardiac_",dim(cardiac)[1] ,".csv"), row.names=FALSE)
